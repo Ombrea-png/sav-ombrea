@@ -454,6 +454,24 @@ def render_form_dossier(existing: Optional[dict] = None):
 
 init_db()
 
+# ── Authentification ─────────────────────────────────────────────────────────
+MOT_DE_PASSE = "ombrea2026"
+
+if "authentifie" not in st.session_state:
+    st.session_state.authentifie = False
+
+if not st.session_state.authentifie:
+    st.title("🔧 SAV Ombréa®")
+    st.subheader("Connexion requise")
+    pwd = st.text_input("Mot de passe", type="password")
+    if st.button("Se connecter"):
+        if pwd == MOT_DE_PASSE:
+            st.session_state.authentifie = True
+            st.rerun()
+        else:
+            st.error("Mot de passe incorrect.")
+    st.stop()
+
 # Sidebar
 st.sidebar.title("SAV Ombréa®")
 vue = st.sidebar.radio("Vue", ["Tableau", "Kanban", "Relances du jour"])
